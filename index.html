@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 20px;
+    padding-top: 80px; 
+}
+
+
+.navbar {
+    width: 98%; 
+    height: 50px;
+    text-align: center;
+    background-color: #000;
+    position: fixed;
+    top: 20px; 
+    left: 10px; 
+    right: 20px;
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.navbar-title {
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: lighter;
+}
+
+
+.container {
+    max-width: 99%;
+    margin: 0 0;
+    background-color: #fff;
+    padding: 0px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.search-container button {
+    width: 10%;
+    padding: 10px 10px;
+    margin-left: 10px;
+    margin-right: 0px;
+    border: none;
+    background-color: black;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sort-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.sort-buttons button {
+    width: 15%;
+    padding: 10px 10px;
+    border: none;
+    background-color: black;
+    color: #fff;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+table th {
+    background-color: #f0f0f0;
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+</style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-title">Student Portal</div>
+    </div>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search">
+            <button onclick="searchTable()">Search</button>
+        </div>
+        <div class="sort-buttons">
+            <button onclick="sortTable('name', 'asc')">Sort A→Z</button>
+            <button onclick="sortTable('name', 'desc')">Sort Z→A</button>
+            <button onclick="sortTable('marks', 'desc')">Sort By Marks</button>
+            <button onclick="sortTable('passing', 'asc')">Sort By Passing</button>
+            <button onclick="sortTable('class', 'asc')">Sort By Class</button>
+            <button onclick="sortTable('gender', 'asc')">Sort By Gender</button>
+        </div>
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Class</th>
+                    <th>Marks</th>
+                    <th>Passing</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><img src="https://s3-alpha-sig.figma.com/img/0aa9/01df/08955568a9e0b0a5e15ad9f876e98b70?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ONespKxuGJRW6FOe3YzCE-etRwaIRHz18ypCDSMsciQJOgmOX3i6AN3nWdXHtoJNdV3tyhGIWHNOPLMmw3zH-qmNuLUSgRZrTBokgprNcZ9w-l9kG3~ZiQXJkSX2mu9pPZcNqbYmtOo46H-MlPN6MRylwOzvK-XY-UWl-IhS07s2ab8JymCPS9tFyG1fgxAr-rljW3lNSrz94NZWKh3nTI2aVnuhDzRzH15eDCDdUXMJfasEIj6sJH0LdSLjjwDbJr8MZGtHwU7Lvu91jB6HpZ6j4xTHsJbbavxt-LuOu5oG0jh6L4Zzm2VdyA-G-~0KqCy9o6LkzObfzxQ54ZmbPw__" alt="avatar" class="avatar"> Avi Vashishta</td>
+                    <td>Male</td>
+                    <td>12</td>
+                    <td>99</td>
+                    <td>Failed</td>
+                    <td>avi@gmail.com</td>
+                </tr>
+                <!-- More rows as needed -->
+                <tr>
+                <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function searchTable() {
+    const input = document.getElementById('search').value.toLowerCase();
+    const table = document.getElementById('studentTable');
+    const rows = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName('td');
+        let matched = false;
+
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].innerText.toLowerCase().indexOf(input) > -1) {
+                matched = true;
+                break;
+            }
+        }
+
+        if (matched) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+}
+
+function sortTable(column, order) {
+    const table = document.getElementById('studentTable');
+    const rows = Array.from(table.rows).slice(1);
+    const columnIndex = {
+        'name': 1,
+        'gender': 2,
+        'class': 3,
+        'marks': 4,
+        'passing': 5
+    }[column];
+
+    rows.sort((rowA, rowB) => {
+        let cellA = rowA.cells[columnIndex].innerText;
+        let cellB = rowB.cells[columnIndex].innerText;
+
+        if (column === 'marks' || column === 'class') {
+            cellA = parseInt(cellA);
+            cellB = parseInt(cellB);
+        }
+
+        if (cellA < cellB) {
+            return order === 'asc' ? -1 : 1;
+        }
+        if (cellA > cellB) {
+            return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+    });
+
+    rows.forEach(row => table.appendChild(row));
+}
+</script>
+    
+</body>
+</html>
